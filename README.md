@@ -77,3 +77,71 @@ This analyzes the dataset and generates:
 - analysis_results.csv
 - forensic_analysis_report.txt
 - analysis_visualization.png
+
+## Troubleshooting
+
+### Issue: ImportError for sklearn
+```bash
+pip install scikit-learn
+```
+
+### Issue: TensorFlow not found
+```bash
+pip install tensorflow
+```
+
+### Issue: Model training is slow
+- Reduce dataset size
+- Use fewer features
+- Enable GPU acceleration
+- Reduce number of epochs
+
+### Issue: Out of memory
+- Reduce batch size
+- Use fewer features
+- Reduce dataset size
+- Close other applications
+
+### Issue: Models not saved
+- Check models/ directory exists
+- Verify write permissions
+- Check disk space
+
+## Advanced Usage
+
+### Custom Dataset
+To use your own forensic dataset:
+
+1. Prepare CSV with same columns as forensic_dataset.csv
+2. Update dataset path in scripts
+3. Run analysis with your data
+
+### Hyperparameter Tuning
+Modify hyperparameters in 02_model_training.py:
+
+```python
+# Random Forest
+RandomForestClassifier(
+    n_estimators=200,  # Increase for better accuracy
+    max_depth=10,      # Decrease to reduce overfitting
+    min_samples_split=10
+)
+```
+
+### Model Deployment
+To use trained models in production:
+
+```python
+import joblib
+
+# Load model
+model = joblib.load('models/random_forest_model.pkl')
+scaler = joblib.load('models/random_forest_scaler.pkl')
+
+# Prepare features
+features = scaler.transform(new_data)
+
+# Make prediction
+prediction = model.predict(features)
+probability = model.predict_proba(features)
+```
